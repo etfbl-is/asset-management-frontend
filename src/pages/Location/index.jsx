@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import locationService from "../../services/location.service";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
-import { Button, Table, Typography } from "antd";
+import { Button, message, Popconfirm, Space, Table, Typography } from "antd";
 import ApplicationHeader from "../../components/ApplicationHeader";
 import LocationModal from "./components/LocationModal";
 const Page = styled.div`
@@ -30,7 +30,10 @@ const Location = () => {
   const { t } = useTranslation();
   const [locations, setLocations] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
+  const [confirmLoading, setConfirmLoading] = useState(false);
+
   const [editMode, setEditMode] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState(null);
   useEffect(() => {
     locationService.getAll().then((res) => setLocations(res.data));
   }, []);
@@ -51,6 +54,24 @@ const Location = () => {
       title: t("location.longitude"),
       dataIndex: "longitude",
     },
+    {
+      title: t("actions"),
+      key: "actions",
+      // eslint-disable-next-line react/display-name
+      render: (_text, record) => (
+        <Space size="middle">
+          <a onClick={() => openEditModal(record)}>{t("edit")}</a>
+          <Popconfirm
+            title={t("areYouSure")}
+            okText={t("yes")}
+            cancelText={t("no")}
+            onConfirm={() => onDelete(record)}
+          >
+            <a>{t("delete")}</a>
+          </Popconfirm>
+        </Space>
+      ),
+    },
   ];
 
   const openAddModal = () => {
@@ -58,8 +79,63 @@ const Location = () => {
     setModalVisible(true);
   };
 
+  const openEditModal = (location) => {
+    setSelectedLocation(location);
+    setEditMode(true);
+    setModalVisible(true);
+  };
+
   const closeModal = () => {
+    setSelectedLocation(null);
+    setConfirmLoading(false);
+    setEditMode(false);
     setModalVisible(false);
+  };
+
+  const saveData = (location) => {
+    setConfirmLoading(true);
+    if (editMode) {
+      locationService
+        .update(location)
+        .then((res) => {
+          message.success(t("editSuccess"));
+          closeModal();
+          setLocations(
+            locations.map((el) => (el.id === res.id ? { ...el, ...res } : el))
+          );
+        })
+        .catch((err) => {
+          console.error(err);
+          setConfirmLoading(false);
+          message.error(t("editFail"));
+        });
+    } else {
+      locationService
+        .insert(location)
+        .then((res) => {
+          closeModal();
+          message.success(t("insertSuccess"));
+          setLocations([...locations, res]);
+        })
+        .catch((err) => {
+          console.error(err);
+          setConfirmLoading(false);
+          message.error(t("insertFail"));
+        });
+    }
+  };
+
+  const onDelete = (location) => {
+    locationService
+      .remove(location.id)
+      .then(() => {
+        message.success(t("deleteSuccess"));
+        setLocations(locations.filter((el) => el.id !== location.id));
+      })
+      .catch((err) => {
+        console.error(err);
+        message.error(t("deleteFail"));
+      });
   };
 
   return (
@@ -73,6 +149,7 @@ const Location = () => {
           </Button>
         </Toolbar>
         <LocationTable
+          key="id"
           dataSource={locations}
           columns={columns}
           scroll={{ y: "calc(100vh - 250px)" }}
@@ -81,8 +158,10 @@ const Location = () => {
       <LocationModal
         editMode={editMode}
         visible={modalVisible}
+        confirmLoading={confirmLoading}
+        location={selectedLocation}
         onCancel={closeModal}
-        onOk={closeModal}
+        onOk={saveData}
       />
     </Page>
   );
