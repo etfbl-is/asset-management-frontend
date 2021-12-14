@@ -1,0 +1,19 @@
+{
+  "en": "English",
+  "sr": "Serbian",
+  "save": "Save",
+  "cancel": "Cancel",
+  "application": {
+    "title": "Asset Management"
+  },
+  "location": {
+    "title": "Locations",
+    "addBtn": "Add location",
+    "name": "Name",
+    "description": "Description",
+    "latitude": "Latitude",
+    "longitude": "Longitude",
+    "addModalTitle": "New location",
+    "editModalTitle": "Edit location"
+  }
+}

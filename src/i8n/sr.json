@@ -1,0 +1,19 @@
+{
+  "en": "Engleski",
+  "sr": "Srpski",
+  "save": "Sačuvajte",
+  "cancel": "Odustanite",
+  "application": {
+    "title": "Asset Management"
+  },
+  "location": {
+    "title": "Lokacije",
+    "addBtn": "Dodajte lokaciju",
+    "name": "Naziv",
+    "description": "Opis",
+    "latitude": "Geografska širina",
+    "longitude": "Geografska dužina",
+    "addModalTitle": "Nova lokacija",
+    "editModalTitle": "Izmjena lokacije"
+  }
+}
