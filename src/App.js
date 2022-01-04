@@ -10,7 +10,10 @@ import AssetStatus from "./pages/AssetStatus";
 import AssetType from "./pages/AssetType";
 initializeI18N();
 
-const AppContent = styled.div``;
+const AppContent = styled.div`
+  display: flex;
+  height: 100%;
+`;
 
 const App = () => (
   <BrowserRouter>

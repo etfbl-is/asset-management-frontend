@@ -2,6 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 import LanguageSelector from "./LanguageSelector";
+import MainMenu from "./MainMenu";
 
 const Header = styled.div`
   box-shadow: 0 2px 8px #f0f1f2;
@@ -19,11 +20,19 @@ const Title = styled.span`
   font-weight: bold;
 `;
 
+const LeftSide = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 const ApplicationHeader = (props) => {
   const { t } = useTranslation();
   return (
     <Header>
-      <Title>{t("application.title")}</Title>
+      <LeftSide>
+        <Title>{t("application.title")}</Title>
+        <MainMenu />
+      </LeftSide>
       <LanguageSelector />
     </Header>
   );
