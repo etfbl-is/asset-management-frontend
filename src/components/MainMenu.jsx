@@ -6,7 +6,6 @@ import { Link, withRouter } from "react-router-dom";
 const MainMenu = (props) => {
   const { t } = useTranslation();
   const { pathname } = props.location;
-  console.log(pathname);
   return (
     <Menu
       defaultSelectedKeys={[pathname === "/" ? "/asset" : pathname]}

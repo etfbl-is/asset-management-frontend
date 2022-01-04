@@ -2,8 +2,10 @@ import base from "./base.service";
 
 const instance = base.service();
 
-export const getAll = () => {
-  return instance.get("/assets");
+export const getAll = (page, size, sorters) => {
+  return instance.get(
+    `/assets?page=${page}&size=${size}${getFieldsToSort(sorters)}`
+  );
 };
 
 export const insert = (asset) => {
@@ -16,6 +18,12 @@ export const update = (asset) => {
 
 export const remove = (id) => {
   return instance.delete(`/assets/${id}`);
+};
+
+const getFieldsToSort = (sorters) => {
+  if (!sorters || !sorters.field) return "";
+  const direction = sorters.order === "ascend" ? "ASC" : "DESC";
+  return `&sort=${sorters.field},${direction}`;
 };
 
 export default {

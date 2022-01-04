@@ -19,36 +19,53 @@ const Asset = () => {
   const [assets, setAssets] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
-
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 5,
+  });
   const [editMode, setEditMode] = useState(false);
   const [selectedAsset, setSelectedAsset] = useState(null);
   useEffect(() => {
-    assetService.getAll().then((res) => setAssets(res.data));
+    assetService
+      .getAll(pagination.current - 1, pagination.pageSize)
+      .then((res) => {
+        setAssets(res.data.content);
+        setPagination({
+          ...pagination,
+          total: res.data.totalElements,
+        });
+      });
   }, []);
   const columns = [
     {
       title: t("asset.name"),
       dataIndex: "name",
+      sorter: true,
     },
     {
       title: t("asset.identifier"),
       dataIndex: "identifier",
+      sorter: true,
     },
     {
       title: t("asset.description"),
       dataIndex: "description",
+      sorter: true,
     },
     {
       title: t("asset.location"),
       dataIndex: "locationName",
+      sorter: true,
     },
     {
       title: t("asset.type"),
       dataIndex: "assetTypeName",
+      sorter: true,
     },
     {
       title: t("asset.status"),
       dataIndex: "assetStatusName",
+      sorter: true,
     },
     {
       title: t("actions"),
@@ -131,6 +148,16 @@ const Asset = () => {
       });
   };
 
+  const onTableChange = (pagination, filter, sorters) => {
+    console.log(pagination, filter, sorters);
+    assetService
+      .getAll(pagination.current - 1, pagination.pageSize, sorters)
+      .then((res) => {
+        setAssets(res.data.content);
+        setPagination({ ...pagination, total: res.data.totalElements });
+      });
+  };
+
   return (
     <Content>
       <Toolbar>
@@ -144,6 +171,8 @@ const Asset = () => {
         dataSource={assets}
         columns={columns}
         scroll={{ y: "calc(100vh - 250px)" }}
+        onChange={onTableChange}
+        pagination={pagination}
       />
       <AssetModal
         editMode={editMode}
