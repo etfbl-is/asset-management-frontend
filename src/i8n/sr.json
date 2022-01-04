@@ -17,6 +17,8 @@
   "deleteSuccess": "Uspješno brisanje.",
   "deleteFail": "Greška prilikom brisanja.",
   "duplicate": "Zapis već postoji",
+  "userInfo": "Korisnički profil",
+  "logout": "Odjavite se",
   "application": {
     "title": "Asset Management"
   },
@@ -51,10 +53,32 @@
     "editModalTitle": "Izmjena tipa resursa"
   },
   "assetStatus": {
-    "title": "Statusi resurs",
+    "title": "Statusi resursa",
     "addBtn": "Dodajte status",
     "name": "Naziv",
     "addModalTitle": "Novi status",
     "editModalTitle": "Izmjena statusa"
+  },
+  "user": {
+    "signUp": "Registrujte se",
+    "title": "Korisnici",
+    "username": "Korisničko ime",
+    "password": "Lozinka",
+    "submit": "Prijavite se",
+    "firstName": "Ime",
+    "lastName": "Prezime",
+    "email": "Email",
+    "status": "Status",
+    "role": "Grupa",
+    "changeRole": "Promijenite grupu",
+    "changeStatus": "Promijenite status",
+    "ADMIN": "Administrator",
+    "USER": "Korisnik",
+    "ACTIVE": "Aktivan",
+    "BLOCKED": "Blokiran",
+    "REQUESTED": "Čeka odobrenje",
+    "successUserInfo": "Uspješna izmjena profila",
+    "signUpSuccess": "Uspješna registracija",
+    "signUpFail": "Greška tokom registracije"
   }
 }

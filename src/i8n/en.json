@@ -17,6 +17,8 @@
   "deleteSuccess": "Delete success.",
   "deleteFail": "Delete error.",
   "duplicate": "Duplicate entry",
+  "userInfo": "User profile",
+  "logout": "Logout",
   "application": {
     "title": "Asset Management"
   },
@@ -56,5 +58,27 @@
     "name": "Name",
     "addModalTitle": "New status",
     "editModalTitle": "Edit status"
+  },
+  "user": {
+    "signUp": "Sign up",
+    "title": "Users",
+    "username": "Username",
+    "password": "Password",
+    "submit": "Login",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "email": "Email",
+    "status": "Status",
+    "role": "Role",
+    "changeRole": "Change Role",
+    "changeStatus": "Change status",
+    "ADMIN": "Administrator",
+    "USER": "User",
+    "ACTIVE": "Active",
+    "BLOCKED": "Blocked",
+    "REQUESTED": "Requested",
+    "successUserInfo": "User profile changed",
+    "signUpSuccess": "Sign up success",
+    "signUpFail": "Sign up error"
   }
 }

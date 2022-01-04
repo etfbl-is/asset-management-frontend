@@ -25,7 +25,7 @@ const AssetModal = (props) => {
   }, [asset]);
   useEffect(() => {
     locationService.getAll().then((res) => setLocations(res.data));
-    assetTypeService.getAll().then((res) => setAssetTypes(res.data));
+    assetTypeService.getAll().then((res) => setAssetTypes(res));
     assetStatusService.getAll().then((res) => setAssetStatuses(res.data));
   }, []);
   return (

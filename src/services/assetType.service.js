@@ -1,9 +1,9 @@
 import base from "./base.service";
 
-const instance = base.service();
+const instance = base.service(true);
 
 export const getAll = () => {
-  return instance.get("/asset-types");
+  return instance.get("/asset-types").then((res) => res.data);
 };
 
 export const insert = (assetType) => {

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import assetTypeService from "../../services/assetType.service";
 import { useTranslation } from "react-i18next";
 import { Button, message, Popconfirm, Space, Typography } from "antd";
 import AssetTypeModal from "./components/AssetTypeModal";
@@ -13,17 +12,25 @@ import {
   handleInsertError,
   handleUpdateError,
 } from "../../util.js/errorHandlers";
-
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getAll,
+  insert,
+  remove,
+  update,
+} from "../../redux/slices/assetTypeSlice";
+import { unwrapResult } from "@reduxjs/toolkit";
 const AssetType = () => {
   const { t } = useTranslation();
-  const [assetTypes, setAssetTypes] = useState([]);
+  const assetTypes = useSelector((state) => state.assetTypes);
+  const dispatch = useDispatch();
   const [modalVisible, setModalVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
 
   const [editMode, setEditMode] = useState(false);
   const [selectedAssetType, setSelectedAssetType] = useState(null);
   useEffect(() => {
-    assetTypeService.getAll().then((res) => setAssetTypes(res.data));
+    dispatch(getAll());
   }, []);
   const columns = [
     {
@@ -75,26 +82,22 @@ const AssetType = () => {
   const saveData = (assetType) => {
     setConfirmLoading(true);
     if (editMode) {
-      assetTypeService
-        .update(assetType)
+      dispatch(update(assetType))
+        .then(unwrapResult)
         .then((res) => {
           message.success(t("editSuccess"));
           closeModal();
-          setAssetTypes(
-            assetTypes.map((el) => (el.id === res.id ? { ...el, ...res } : el))
-          );
         })
         .catch((err) => {
           setConfirmLoading(false);
           handleUpdateError(err, t);
         });
     } else {
-      assetTypeService
-        .insert(assetType)
+      dispatch(insert(assetType))
+        .then(unwrapResult)
         .then((res) => {
           closeModal();
           message.success(t("insertSuccess"));
-          setAssetTypes([...assetTypes, res]);
         })
         .catch((err) => {
           setConfirmLoading(false);
@@ -104,11 +107,10 @@ const AssetType = () => {
   };
 
   const onDelete = (assetType) => {
-    assetTypeService
-      .remove(assetType.id)
+    dispatch(remove(assetType.id))
+      .then(unwrapResult)
       .then(() => {
         message.success(t("deleteSuccess"));
-        setAssetTypes(assetTypes.filter((el) => el.id !== assetType.id));
       })
       .catch((err) => {
         handleDeleteError(err, t);

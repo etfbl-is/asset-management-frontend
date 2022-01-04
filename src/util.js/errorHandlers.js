@@ -1,5 +1,4 @@
 import { message } from "antd";
-
 export const handleInsertError = (err, t) => {
   console.error(err);
   if (err.response.status === 409) message.error(t("duplicate"));
