@@ -2,11 +2,9 @@ import React, { useState, useEffect } from "react";
 import locationService from "../../services/location.service";
 import { useTranslation } from "react-i18next";
 import { Button, message, Popconfirm, Space, Typography } from "antd";
-import ApplicationHeader from "../../components/ApplicationHeader";
 import LocationModal from "./components/LocationModal";
 import {
   Content,
-  Page,
   StyledTable,
   Toolbar,
 } from "../../components/BasicStyledComponents";
@@ -126,22 +124,19 @@ const Location = () => {
   };
 
   return (
-    <Page>
-      <ApplicationHeader />
-      <Content>
-        <Toolbar>
-          <Typography.Title level={3}>{t("location.title")}</Typography.Title>
-          <Button type="primary" onClick={() => openAddModal()}>
-            {t("location.addBtn")}
-          </Button>
-        </Toolbar>
-        <StyledTable
-          key="id"
-          dataSource={locations}
-          columns={columns}
-          scroll={{ y: "calc(100vh - 250px)" }}
-        />
-      </Content>
+    <Content>
+      <Toolbar>
+        <Typography.Title level={3}>{t("location.title")}</Typography.Title>
+        <Button type="primary" onClick={() => openAddModal()}>
+          {t("location.addBtn")}
+        </Button>
+      </Toolbar>
+      <StyledTable
+        key="id"
+        dataSource={locations}
+        columns={columns}
+        scroll={{ y: "calc(100vh - 250px)" }}
+      />
       <LocationModal
         editMode={editMode}
         visible={modalVisible}
@@ -150,7 +145,7 @@ const Location = () => {
         onCancel={closeModal}
         onOk={saveData}
       />
-    </Page>
+    </Content>
   );
 };
 

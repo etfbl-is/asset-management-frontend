@@ -2,11 +2,9 @@ import React, { useState, useEffect } from "react";
 import assetStatusService from "../../services/assetStatus.service";
 import { useTranslation } from "react-i18next";
 import { Button, message, Popconfirm, Space, Typography } from "antd";
-import ApplicationHeader from "../../components/ApplicationHeader";
 import AssetStatusModal from "./components/AssetStatusModal";
 import {
   Content,
-  Page,
   StyledTable,
   Toolbar,
 } from "../../components/BasicStyledComponents";
@@ -116,24 +114,19 @@ const AssetStatus = () => {
   };
 
   return (
-    <Page>
-      <ApplicationHeader />
-      <Content>
-        <Toolbar>
-          <Typography.Title level={3}>
-            {t("assetStatus.title")}
-          </Typography.Title>
-          <Button type="primary" onClick={() => openAddModal()}>
-            {t("assetStatus.addBtn")}
-          </Button>
-        </Toolbar>
-        <StyledTable
-          key="id"
-          dataSource={assetStatuses}
-          columns={columns}
-          scroll={{ y: "calc(100vh - 250px)" }}
-        />
-      </Content>
+    <Content>
+      <Toolbar>
+        <Typography.Title level={3}>{t("assetStatus.title")}</Typography.Title>
+        <Button type="primary" onClick={() => openAddModal()}>
+          {t("assetStatus.addBtn")}
+        </Button>
+      </Toolbar>
+      <StyledTable
+        key="id"
+        dataSource={assetStatuses}
+        columns={columns}
+        scroll={{ y: "calc(100vh - 250px)" }}
+      />
       <AssetStatusModal
         editMode={editMode}
         visible={modalVisible}
@@ -142,7 +135,7 @@ const AssetStatus = () => {
         onCancel={closeModal}
         onOk={saveData}
       />
-    </Page>
+    </Content>
   );
 };
 

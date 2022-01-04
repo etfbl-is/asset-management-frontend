@@ -2,11 +2,9 @@ import React, { useState, useEffect } from "react";
 import assetService from "../../services/asset.service";
 import { useTranslation } from "react-i18next";
 import { Button, message, Popconfirm, Space, Typography } from "antd";
-import ApplicationHeader from "../../components/ApplicationHeader";
 import AssetModal from "./components/AssetModal";
 import {
   Content,
-  Page,
   StyledTable,
   Toolbar,
 } from "../../components/BasicStyledComponents";
@@ -134,22 +132,19 @@ const Asset = () => {
   };
 
   return (
-    <Page>
-      <ApplicationHeader />
-      <Content>
-        <Toolbar>
-          <Typography.Title level={3}>{t("asset.title")}</Typography.Title>
-          <Button type="primary" onClick={() => openAddModal()}>
-            {t("asset.addBtn")}
-          </Button>
-        </Toolbar>
-        <StyledTable
-          key="id"
-          dataSource={assets}
-          columns={columns}
-          scroll={{ y: "calc(100vh - 250px)" }}
-        />
-      </Content>
+    <Content>
+      <Toolbar>
+        <Typography.Title level={3}>{t("asset.title")}</Typography.Title>
+        <Button type="primary" onClick={() => openAddModal()}>
+          {t("asset.addBtn")}
+        </Button>
+      </Toolbar>
+      <StyledTable
+        key="id"
+        dataSource={assets}
+        columns={columns}
+        scroll={{ y: "calc(100vh - 250px)" }}
+      />
       <AssetModal
         editMode={editMode}
         visible={modalVisible}
@@ -158,7 +153,7 @@ const Asset = () => {
         onCancel={closeModal}
         onOk={saveData}
       />
-    </Page>
+    </Content>
   );
 };
 
