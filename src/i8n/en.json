@@ -16,6 +16,7 @@
   "editFail": "Edit error.",
   "deleteSuccess": "Delete success.",
   "deleteFail": "Delete error.",
+  "duplicate": "Duplicate entry",
   "application": {
     "title": "Asset Management"
   },
@@ -28,5 +29,32 @@
     "longitude": "Longitude",
     "addModalTitle": "New location",
     "editModalTitle": "Edit location"
+  },
+  "asset": {
+    "title": "Assets",
+    "addBtn": "Add asset",
+    "name": "Name",
+    "description": "Description",
+    "location": "Location",
+    "status": "Status",
+    "type": "Type",
+    "identifier": "Identifier",
+    "addModalTitle": "New asset",
+    "editModalTitle": "Edit asset"
+  },
+  "assetType": {
+    "title": "Asset types",
+    "addBtn": "Add type",
+    "name": "Name",
+    "description": "Description",
+    "addModalTitle": "New asset type",
+    "editModalTitle": "Edit asset type"
+  },
+  "assetStatus": {
+    "title": "Asset statuses",
+    "addBtn": "Add status",
+    "name": "Name",
+    "addModalTitle": "New status",
+    "editModalTitle": "Edit status"
   }
 }

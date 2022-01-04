@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import locationService from "../../services/location.service";
+import assetTypeService from "../../services/assetType.service";
 import { useTranslation } from "react-i18next";
 import { Button, message, Popconfirm, Space, Typography } from "antd";
 import ApplicationHeader from "../../components/ApplicationHeader";
-import LocationModal from "./components/LocationModal";
+import AssetTypeModal from "./components/AssetTypeModal";
 import {
   Content,
   Page,
@@ -16,33 +16,25 @@ import {
   handleUpdateError,
 } from "../../util.js/errorHandlers";
 
-const Location = () => {
+const AssetType = () => {
   const { t } = useTranslation();
-  const [locations, setLocations] = useState([]);
+  const [assetTypes, setAssetTypes] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
 
   const [editMode, setEditMode] = useState(false);
-  const [selectedLocation, setSelectedLocation] = useState(null);
+  const [selectedAssetType, setSelectedAssetType] = useState(null);
   useEffect(() => {
-    locationService.getAll().then((res) => setLocations(res.data));
+    assetTypeService.getAll().then((res) => setAssetTypes(res.data));
   }, []);
   const columns = [
     {
-      title: t("location.name"),
+      title: t("assetType.name"),
       dataIndex: "name",
     },
     {
-      title: t("location.description"),
+      title: t("assetType.description"),
       dataIndex: "description",
-    },
-    {
-      title: t("location.latitude"),
-      dataIndex: "latitude",
-    },
-    {
-      title: t("location.longitude"),
-      dataIndex: "longitude",
     },
     {
       title: t("actions"),
@@ -69,29 +61,29 @@ const Location = () => {
     setModalVisible(true);
   };
 
-  const openEditModal = (location) => {
-    setSelectedLocation(location);
+  const openEditModal = (assetType) => {
+    setSelectedAssetType(assetType);
     setEditMode(true);
     setModalVisible(true);
   };
 
   const closeModal = () => {
-    setSelectedLocation(null);
+    setSelectedAssetType(null);
     setConfirmLoading(false);
     setEditMode(false);
     setModalVisible(false);
   };
 
-  const saveData = (location) => {
+  const saveData = (assetType) => {
     setConfirmLoading(true);
     if (editMode) {
-      locationService
-        .update(location)
+      assetTypeService
+        .update(assetType)
         .then((res) => {
           message.success(t("editSuccess"));
           closeModal();
-          setLocations(
-            locations.map((el) => (el.id === res.id ? { ...el, ...res } : el))
+          setAssetTypes(
+            assetTypes.map((el) => (el.id === res.id ? { ...el, ...res } : el))
           );
         })
         .catch((err) => {
@@ -99,12 +91,12 @@ const Location = () => {
           handleUpdateError(err, t);
         });
     } else {
-      locationService
-        .insert(location)
+      assetTypeService
+        .insert(assetType)
         .then((res) => {
           closeModal();
           message.success(t("insertSuccess"));
-          setLocations([...locations, res]);
+          setAssetTypes([...assetTypes, res]);
         })
         .catch((err) => {
           setConfirmLoading(false);
@@ -113,12 +105,12 @@ const Location = () => {
     }
   };
 
-  const onDelete = (location) => {
-    locationService
-      .remove(location.id)
+  const onDelete = (assetType) => {
+    assetTypeService
+      .remove(assetType.id)
       .then(() => {
         message.success(t("deleteSuccess"));
-        setLocations(locations.filter((el) => el.id !== location.id));
+        setAssetTypes(assetTypes.filter((el) => el.id !== assetType.id));
       })
       .catch((err) => {
         handleDeleteError(err, t);
@@ -130,23 +122,23 @@ const Location = () => {
       <ApplicationHeader />
       <Content>
         <Toolbar>
-          <Typography.Title level={3}>{t("location.title")}</Typography.Title>
+          <Typography.Title level={3}>{t("assetType.title")}</Typography.Title>
           <Button type="primary" onClick={() => openAddModal()}>
-            {t("location.addBtn")}
+            {t("assetType.addBtn")}
           </Button>
         </Toolbar>
         <StyledTable
           key="id"
-          dataSource={locations}
+          dataSource={assetTypes}
           columns={columns}
           scroll={{ y: "calc(100vh - 250px)" }}
         />
       </Content>
-      <LocationModal
+      <AssetTypeModal
         editMode={editMode}
         visible={modalVisible}
         confirmLoading={confirmLoading}
-        location={selectedLocation}
+        assetType={selectedAssetType}
         onCancel={closeModal}
         onOk={saveData}
       />
@@ -154,4 +146,4 @@ const Location = () => {
   );
 };
 
-export default Location;
+export default AssetType;

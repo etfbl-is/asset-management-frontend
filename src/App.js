@@ -1,8 +1,8 @@
 import React from "react";
 import initializeI18N from "./i8n/init";
-import Location from "./pages/Location";
+import Asset from "./pages/Asset";
 initializeI18N();
 
-const App = () => <Location />;
+const App = () => <Asset />;
 
 export default App;

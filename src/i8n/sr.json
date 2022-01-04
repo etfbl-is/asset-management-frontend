@@ -16,6 +16,7 @@
   "editFail": "Greška prilikom izmjene.",
   "deleteSuccess": "Uspješno brisanje.",
   "deleteFail": "Greška prilikom brisanja.",
+  "duplicate": "Zapis već postoji",
   "application": {
     "title": "Asset Management"
   },
@@ -28,5 +29,32 @@
     "longitude": "Geografska dužina",
     "addModalTitle": "Nova lokacija",
     "editModalTitle": "Izmjena lokacije"
+  },
+  "asset": {
+    "title": "Resursi",
+    "addBtn": "Dodajte resurs",
+    "name": "Naziv",
+    "description": "Opis",
+    "location": "Lokacija",
+    "status": "Status",
+    "type": "Tip",
+    "identifier": "Identifikator",
+    "addModalTitle": "Novi resurs",
+    "editModalTitle": "Izmjena resurs"
+  },
+  "assetType": {
+    "title": "Tipovi resursa",
+    "addBtn": "Dodajte tip",
+    "name": "Naziv",
+    "description": "Opis",
+    "addModalTitle": "Novi tip resursa",
+    "editModalTitle": "Izmjena tipa resursa"
+  },
+  "assetStatus": {
+    "title": "Statusi resurs",
+    "addBtn": "Dodajte status",
+    "name": "Naziv",
+    "addModalTitle": "Novi status",
+    "editModalTitle": "Izmjena statusa"
   }
 }
