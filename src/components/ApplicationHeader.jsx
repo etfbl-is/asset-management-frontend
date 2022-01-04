@@ -1,11 +1,13 @@
 import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { message, Tooltip } from "antd";
-import React, { useState } from "react";
+import { Client } from "@stomp/stompjs";
+import { message, notification, Tooltip } from "antd";
+import React, { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { logout, update } from "../redux/slices/userSlice";
+import { ROLE_ADMIN } from "../util.js/constants";
 import { handleUpdateError } from "../util.js/errorHandlers";
 import LanguageSelector from "./LanguageSelector";
 import MainMenu from "./MainMenu";
@@ -72,6 +74,53 @@ const ApplicationHeader = (props) => {
   const user = useSelector((state) => state.users.user);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalLoading, setModalLoading] = useState(false);
+  const stompClient = useRef(null);
+  const stompSubscription = useRef(null);
+  const openNotification = (user) => {
+    notification.open({
+      title: t("application.notificationTitle"),
+      description: `${t("application.notificationText")} :${user.firstName} ${
+        user.lastName
+      } (${user.email}) `,
+    });
+  };
+  const mountStompConnection = () => {
+    stompClient.current = new Client({
+      brokerURL: "ws://localhost:61614/stomp",
+      connectHeaders: {
+        login: "admin",
+        passcode: "admin",
+      },
+      reconnectDelay: 5000,
+      heartbeatIncoming: 4000,
+      heartbeatOutgoing: 4000,
+    });
+    stompClient.current.onConnect = () => {
+      stompSubscription.current = stompClient.current.subscribe(
+        "/topic/sign-up-topic",
+        (message) => {
+          openNotification(JSON.parse(message.body));
+        }
+      );
+    };
+    stompClient.current.activate();
+  };
+  const unmountStompConnection = () => {
+    if (stompSubscription.current) {
+      stompSubscription.current.unsubscribe();
+      stompSubscription.current = null;
+    }
+    if (stompClient.current) {
+      stompClient.current.deactivate();
+      stompClient.current = null;
+    }
+  };
+  useEffect(() => {
+    if (role === ROLE_ADMIN) {
+      mountStompConnection();
+    }
+    return unmountStompConnection;
+  }, [role]);
 
   const closeModal = () => {
     setModalLoading(false);

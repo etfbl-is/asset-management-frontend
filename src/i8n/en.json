@@ -20,7 +20,9 @@
   "userInfo": "User profile",
   "logout": "Logout",
   "application": {
-    "title": "Asset Management"
+    "title": "Asset Management",
+    "notificationTitle": "New user",
+    "notificationText": "There is new request for following user:"
   },
   "location": {
     "title": "Locations",

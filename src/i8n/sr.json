@@ -20,7 +20,9 @@
   "userInfo": "Korisnički profil",
   "logout": "Odjavite se",
   "application": {
-    "title": "Asset Management"
+    "title": "Asset Management",
+    "notificationTitle": "Novi korisnik",
+    "notificationText": "Novi zahtjev za korisnički nalog od:"
   },
   "location": {
     "title": "Lokacije",
